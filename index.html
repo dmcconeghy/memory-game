@@ -6,13 +6,19 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Memory Game</h1>
-    <button id="start">START</button>
-    <button id="reset">RESET</button>
-    <h4 id="counter"></h4>
-    <h4 id="bestguess"></h4>
-    <div id="game">
-    </div>
+    <div id="container">
+      <h1>Candy Matcher</h1>
+    
+      <div id="hud">
+        <button id="start">START</button>
+        <button id="reset">RESET</button>
+        <div class="score"><span id="current-score"></span></div>
+        <div class="score"><span id="best-score"></span></div>
+      </div>
+
+      <div id="game">
+      </div>
+  </div>
     <script src="script.js"></script>
   </body>
 </html>
