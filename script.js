@@ -62,15 +62,21 @@ function handleCardClick(event) {
   if (started){
 
     flipChecker = document.getElementsByClassName("is-flipped")
+    let pair = 0;
    
     if (flipChecker.length < 2){
-      
+      pair = 1;
       event.currentTarget.firstChild.classList.toggle("is-flipped");
       }
 
     if (flipChecker.length === 2){
       if (flipChecker[0].getAttribute("color") === flipChecker[1].getAttribute("color")){
         console.log("match found");
+        flipChecker[1].classList.toggle("is-flipped-matched");
+        flipChecker[0].classList.toggle("is-flipped-matched");
+        flipChecker[1].classList.toggle("is-flipped");
+        flipChecker[0].classList.toggle("is-flipped");
+       
       
       } else {
         console.log("No Match!");
@@ -78,6 +84,7 @@ function handleCardClick(event) {
          
           flipChecker[1].classList.toggle("is-flipped");
           flipChecker[0].classList.toggle("is-flipped");
+          
          
         }, 1000)
         

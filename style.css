@@ -6,6 +6,7 @@
     display: inline-block;
   }
 
+  /* Card Flip styling from https://codepen.io/desandro/pen/LmWoWe */
 
 .scene {
   width: 150px;
@@ -27,6 +28,10 @@
 }
 
 .card.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.card.is-flipped-matched {
   transform: rotateY(180deg);
 }
 
