@@ -1,55 +1,74 @@
 const gameContainer = document.getElementById("game");
 let started = false; 
 
+const start = document.querySelector("#start")
+const reset = document.querySelector("#reset");
+
 const IMAGES = [
   'url("AvatarMemory/aang.jpg")',
   'url("AvatarMemory/appa.jpg")',
-  // 'url("AvatarMemory/asami.jpg")',
+  'url("AvatarMemory/asami.jpg")',
   'url("AvatarMemory/azula.jpg")',
-  // 'url("AvatarMemory/bolin.jpg")',
-  // 'url("AvatarMemory/bumi.jpg")',
+  'url("AvatarMemory/bolin.jpg")',
+  'url("AvatarMemory/bumi.jpg")',
   'url("AvatarMemory/iroh.jpg")',
-  // 'url("AvatarMemory/jeongjeong.jpg")',
+  'url("AvatarMemory/jeongjeong.jpg")',
   'url("AvatarMemory/katara.jpg")',
-  // 'url("AvatarMemory/korra.jpg")',
-  // 'url("AvatarMemory/kuruk.jpg")',
-  // 'url("AvatarMemory/lin.jpg")',
-  // 'url("AvatarMemory/madamwu.jpg")',
-  // 'url("AvatarMemory/mako.jpg")',
-  // 'url("AvatarMemory/mechanist.jpg")',
-  // 'url("AvatarMemory/meiling.jpg")',
-  // 'url("AvatarMemory/meng.jpg")',
+  'url("AvatarMemory/korra.jpg")',
+  'url("AvatarMemory/kuruk.jpg")',
+  'url("AvatarMemory/lin.jpg")',
+  'url("AvatarMemory/madamwu.jpg")',
+  'url("AvatarMemory/mako.jpg")',
+  'url("AvatarMemory/mechanist.jpg")',
+  'url("AvatarMemory/meiling.jpg")',
+  'url("AvatarMemory/meng.jpg")',
   'url("AvatarMemory/momo.jpg")',
-  // 'url("AvatarMemory/ozai.jpg")',
-  // 'url("AvatarMemory/pabu.jpg")',
-  // 'url("AvatarMemory/paindao.jpg")',
-  // 'url("AvatarMemory/pakku.jpg")',
-  // 'url("AvatarMemory/roku.jpg")',
-  // 'url("AvatarMemory/suki.jpg")',
+  'url("AvatarMemory/ozai.jpg")',
+  'url("AvatarMemory/pabu.jpg")',
+  'url("AvatarMemory/paindao.jpg")',
+  'url("AvatarMemory/pakku.jpg")',
+  'url("AvatarMemory/roku.jpg")',
+  'url("AvatarMemory/suki.jpg")',
   'url("AvatarMemory/sokka.jpg")',
-  // 'url("AvatarMemory/tenzin.jpg")',
+  'url("AvatarMemory/tenzin.jpg")',
   'url("AvatarMemory/toph.jpg")',
-  // 'url("AvatarMemory/tylee.jpg")',
-  // 'url("AvatarMemory/yangchen.jpg")',
-  // 'url("AvatarMemory/yue.jpg")',
-  'url("AvatarMemory/zuko.jpg")'
-]
+  'url("AvatarMemory/tylee.jpg")',
+  'url("AvatarMemory/yangchen.jpg")',
+  'url("AvatarMemory/yue.jpg")',
+  'url("AvatarMemory/zuko.jpg")']
 
-let TILESET = []
-for (let i = 0; i < IMAGES.length; i++){
-    TILESET.unshift(IMAGES[i])
-    TILESET.unshift(IMAGES[i])
+let TILESET = [];
+let numPairs = null;
+let choices = [];
+let flipChecker = null;
+
+function generateTiles(){
+  numPairs = document.querySelector("#myRange").value;
+
+  // pick the # of tiles from the range slider
+    while(choices.length < numPairs){
+      let random = Math.ceil(Math.random()*IMAGES.length)
+    if (choices.indexOf(random) === -1){
+      choices.unshift(random)
+    }
+    
+  }
+  
+  console.log(choices)
+  // set the deck with two of everything
+  for (let i = 0; i < numPairs; i++){
+    TILESET.unshift(IMAGES[choices[i]])
+    TILESET.unshift(IMAGES[choices[i]])
+  } 
+
 }
 
-
-// const COLORS = ["red","blue","green","orange","purple","red","blue","green","orange","purple"];
-
-const start = document.querySelector("#start")
 start.addEventListener("click", function(e){
   started = true;
+  generateTiles();
+  createDivsForColors(shuffle(TILESET));
 })
 
-const reset = document.querySelector("#reset");
 reset.addEventListener("click", function(e){
   //localStorage.clear();
   location.reload();
@@ -66,8 +85,6 @@ function shuffle(array) {
   }
   return array;
 }
-
-let shuffledTiles = shuffle(TILESET);
 
 function createDivsForColors(tileArray) {
   for (let tile of tileArray) {
@@ -93,7 +110,6 @@ function createDivsForColors(tileArray) {
   }
 }
 
-let flipChecker
 function handleCardClick(event) {
   if (started && (!event.currentTarget.firstChild.classList.contains("is-flipped"))){
 
@@ -128,7 +144,3 @@ function handleCardClick(event) {
     }
    }
 }
-
-// when the DOM loads
-createDivsForColors(shuffledTiles);
-
