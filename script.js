@@ -28,46 +28,64 @@ let shuffledColors = shuffle(COLORS);
 
 function createDivsForColors(colorArray) {
   for (let color of colorArray) {
-    const newDiv = document.createElement("div");
-    newDiv.classList.add(color);
-    newDiv.addEventListener("click", handleCardClick);
-    gameContainer.append(newDiv);
+
+    const sceneDiv = document.createElement("div");
+    sceneDiv.classList.add("scene", "scene--card")
+    sceneDiv.addEventListener("click", handleCardClick);
+    gameContainer.append(sceneDiv);
+    
+    const cardDiv = document.createElement("div");
+    cardDiv.classList.add("card");
+    sceneDiv.appendChild(cardDiv);
+
+// This function makes flipping work, but needs to limit to 2
+// Probably move it inside handleCardClick()
+    // cardDiv.addEventListener("click", function(){
+    //   cardDiv.classList.toggle("is-flipped");
+    // }); 
+    
+
+    const cardFront = document.createElement("div");
+    cardFront.classList.add("card__face", "card__face--front");
+    cardDiv.appendChild(cardFront)
+
+    const cardBack = document.createElement("div");
+    cardBack.classList.add("card__face", "card__face--back");
+    cardDiv.appendChild(cardBack)
+    cardDiv.setAttribute("color", `${color}`);
+    // cardDiv.style.backgroundColor = color;
   }
 }
 
+let flipChecker
 function handleCardClick(event) {
-  if (started && (!event.target.classList.contains("flipped", "matched"))){
-    let checker = document.getElementsByClassName("flipped");
+  if (started){
 
-    if (checker.length < 2){
-      event.target.style.backgroundColor = `${event.target.classList}`
-      event.target.classList.add("flipped");
-    }
+    flipChecker = document.getElementsByClassName("is-flipped")
+   
+    if (flipChecker.length < 2){
+      
+      event.currentTarget.firstChild.classList.toggle("is-flipped");
+      }
 
-    if (checker.length === 2){
-      if (checker[0].style.backgroundColor === checker[1].style.backgroundColor){
+    if (flipChecker.length === 2){
+      if (flipChecker[0].getAttribute("color") === flipChecker[1].getAttribute("color")){
         console.log("match found");
-        checker[1].classList.add("matched");
-        checker[0].classList.add("matched");
-        checker[1].removeEventListener("click", handleCardClick);
-        checker[0].removeEventListener("click", handleCardClick);
-        checker[1].classList.remove("flipped");
-        checker[0].classList.remove("flipped")
-        checker = []
+      
       } else {
         console.log("No Match!");
         setTimeout(function(){
-          checker[1].style.backgroundColor = "";
-          checker[0].style.backgroundColor = "";
-          checker[1].classList.remove("flipped");
-          checker[0].classList.remove("flipped")
-          checker = [];
+         
+          flipChecker[1].classList.toggle("is-flipped");
+          flipChecker[0].classList.toggle("is-flipped");
+         
         }, 1000)
         
       }
     }
-  }
+   }
 }
 
 // when the DOM loads
 createDivsForColors(shuffledColors);
+
