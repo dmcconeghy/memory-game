@@ -4,6 +4,11 @@ let started = false;
 const start = document.querySelector("#start")
 const reset = document.querySelector("#reset");
 
+// These images belong to Smartyboyx14, a fabulous designer from the Netherlands 
+// Support them by buying their products (like stickers) at
+// https://www.redbubble.com/people/smartyboyx14/shop?artistUserName=Smartyboyx14&collections=1180152&iaCode=all-departments&sortOrder=relevant
+// These images are used only for educational purposes, to demonstrate image handling in the DOM for this exercise. 
+
 const IMAGES = [
   'url("AvatarMemory/aang.jpg")',
   'url("AvatarMemory/appa.jpg")',
@@ -51,7 +56,6 @@ function generateTiles(){
     if (choices.indexOf(random) === -1){
       choices.unshift(random)
     }
-    
   }
   
   console.log(choices)
